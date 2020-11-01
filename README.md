@@ -5,44 +5,77 @@ studentlife: Tidy Handling and Navigation of a Valuable Mobile-Health Dataset
 <img src="man/figures/logo.png" align="right" alt="" width="120" />
 
 <!-- Badges Start -->
+[![CRAN\_Release\_Badge](http://www.r-pkg.org/badges/version-ago/studentlife)](https://CRAN.R-project.org/package=studentlife)
+[![devel Version](https://img.shields.io/badge/devel-1.1.0-brightgreen.svg)](https://github.com/frycast/studentlife)
+[![Downloads](http://cranlogs.r-pkg.org/badges/grand-total/studentlife)](https://CRAN.R-project.org/package=studentlife)
 [![Travis-CI Build Status](https://travis-ci.org/frycast/studentlife.svg?branch=master)](https://travis-ci.org/frycast/studentlife) 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/frycast/studentlife/master?urlpath=rstudio) 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) 
 [![Code coverage](https://codecov.io/gh/frycast/studentlife/branch/master/graph/badge.svg)](https://codecov.io/github/frycast/studentlife?branch=master)
 [![Lifecycle Status](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.3371922.svg)](https://doi.org/10.5281/zenodo.3371922)
 <!-- Badges End -->
 
-
+This package is [available on CRAN](https://CRAN.R-project.org/package=studentlife).
 
 Use this R package to download, navigate and analyse the Student-Life dataset. The Student-Life dataset contains 
     passive and automatic sensing data from the phones of a class 
     of 48 de-identified Dartmouth college students. It was collected 
     over a 10 week term. Additionally, the dataset contains Ecological 
     Momentary Assessment results along with pre- and post-study mental 
-    health surveys, such as the PHQ-9. The intended use is to assess 
+    health surveys, such as the PHQ-9. The intended use is to allow
+    researchers and other interested people to assess 
     mental health, academic performance and behavioral trends. 
     The raw dataset and additional information is available at <https://studentlife.cs.dartmouth.edu/>.
 
 
 
-Install from GitHub with
-------------------------
+
+Installation
+------------
 
 ``` r
-## Uncomment to install the package
+## Uncomment to install the package from CRAN
+# install.packages("studentlife")
+
+## Or, uncomment to install the package from GitHub
 # install.packages("devtools")
 # devtools::install_github("frycast/studentlife")
 ```
 
-Details on the dataset are available [here](https://studentlife.cs.dartmouth.edu). Once installed, you can download and extract the data within R:
-
-``` r
-d <- tempdir()
+This studentlife repository includes a small sample dataset that can be used for practice and testing. You can download the sample data within R:
+```
 library(studentlife)
-download_studentlife(dest = d)
+d <- tempdir()
+download_studentlife(location = d, url = "testdata")
 ```
 
-Then you can use the interactive menu to browse the tables and schemas:
+This README will use the studentlife data in its original format. 
+Details on the full original dataset are available [here](https://studentlife.cs.dartmouth.edu).
+However, an RData version of the dataset has been hosted on Zenodo as of 09/11/2019 [here](https://zenodo.org/record/3529253).
+To download and use this RData version (which is faster to read and takes up less space):
+
+```r
+d <- tempdir()
+download_studentlife(location = d, url = "rdata")
+
+# Choose the schema and table from the list SL_tables:
+SL_tables
+
+# Example with activity table from sensing schema
+schema <- "sensing"
+table <- "activity"
+act <- readRDS(paste0(d, "/dataset_rds/", schema, "/", table, ".Rds"))
+act
+```
+
+In this README we will use the full dataset rather than just the sample data. The download size is 5 GB.
+
+``` r
+download_studentlife(location = d)
+```
+
+Use the interactive menu to browse the tables and schemas of the downloaded dataset:
 
 ``` r
 tab <- studentlife::load_SL_tibble(location = d)
@@ -195,6 +228,18 @@ Skim summary statistics
      type       0       84 84        2           pre: 46, pos: 38, NA: 0   FALSE
       uid       0       84 84       46            0: 2, 1: 2, 2: 2, 3: 2   FALSE
 ```
+
+
+Software Testing
+----------------
+
+This studentlife repository includes many automated software tests implemented via [`testthat`](https://CRAN.R-project.org/package=testthat). We use these to check for bugs before releasing new updates. They can be found under the directory `tests`. Also, we use [Travis-CI](https://travis-ci.org/frycast/studentlife) for continuous integration.
+
+Community Guidelines
+----------------
+* Please give your feedback and report bugs at the [issues page](https://github.com/frycast/studentlife/issues).
+* Contributions are welcome! The best way to contribute is to fork the project on GitHub, make a contribution to your fork, and then submit a pull request. A useful guide can be [found here](https://akrabat.com/the-beginners-guide-to-contributing-to-a-github-project/#summary).
+* If you have questions or need support please email Daniel Fryer via the email on his [GitHub profile](https://github.com/frycast/).
 
 
 <!--

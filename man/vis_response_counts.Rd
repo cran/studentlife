@@ -4,9 +4,14 @@
 \alias{vis_response_counts}
 \title{vis_response_counts}
 \usage{
-vis_response_counts(tab, response,
+vis_response_counts(
+  tab,
+  response,
   main = paste0("Total responses by student (", attr(tab, "table"), ")"),
-  xlab = "Student UID", ylab = "Response count", ...)
+  xlab = "Student UID",
+  ylab = "Response count",
+  ...
+)
 }
 \arguments{
 \item{tab}{A regularised StudentLife tibble (i.e., an object of class
@@ -24,6 +29,10 @@ missing then this defaults to the first such column name.}
 \item{ylab}{The y axis label, passed to \code{\link[graphics]{barplot}}.}
 
 \item{...}{Arguments passed to \code{\link[graphics]{barplot}}.}
+}
+\value{
+A named numeric vector of response counts,
+sorted in descending order.
 }
 \description{
 Produce an ordered bar plot of the

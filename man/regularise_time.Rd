@@ -4,13 +4,19 @@
 \alias{regularise_time}
 \title{regularise_time}
 \usage{
-regularise_time(tab, ..., blocks = c("epoch", "day"), add_NAs = TRUE,
+regularise_time(
+  tab,
+  ...,
+  blocks = c("epoch", "day"),
+  add_NAs = TRUE,
+  unsafe = F,
   study_duration = getOption("SL_duration"),
   start_date = getOption("SL_start"),
   epoch_levels = getOption("SL_epoch_levels"),
   epoch_ubs = getOption("SL_epoch_ubs"),
-  uid_range = getOption("SL_uids"), date_range = seq(from = start_date,
-  by = 1, length.out = study_duration))
+  uid_range = getOption("SL_uids"),
+  date_range = seq(from = start_date, by = 1, length.out = study_duration)
+)
 }
 \arguments{
 \item{tab}{An \code{SL_tibble} as returned
@@ -23,7 +29,8 @@ observations are encountered in a block. Any columns
 not specified here or under \code{blocks} will be dropped.}
 
 \item{blocks}{A character vector naming one or more of the
-block options "hour", "epoch", "day", "week", "weekday", "month" or "date".
+block options "hour_in_day", "epoch", "day", "week", "weekday",
+"month" or "date".
 If not present as column names in
 \code{tab}, an attempt will be made to infer the blocks from existing
 time information with \code{\link[studentlife]{add_block_labels}}.
@@ -32,6 +39,9 @@ have one observation (possibly \code{NA}) for each block.}
 
 \item{add_NAs}{A logical. If TRUE then NAs will be introduced
 to fill missing blocks.}
+
+\item{unsafe}{A logical. Default is \code{FALSE}. If this is
+set to \code{TRUE} then less checks will be performed.}
 
 \item{study_duration}{Integer. The duration of the StudentLife
 study in days. This parameter does nothing if \code{limit_date_range}

@@ -4,11 +4,16 @@
 \alias{add_block_labels}
 \title{add_block_labels}
 \usage{
-add_block_labels(tab, type = c("hour", "epoch", "day", "week", "weekday",
-  "month", "date"), interval = "start", warning = TRUE,
+add_block_labels(
+  tab,
+  type = c("hour_in_day", "epoch", "day", "week", "weekday", "month", "date"),
+  interval = "start",
+  warning = TRUE,
   start_date = getOption("SL_start"),
   epoch_levels = getOption("SL_epoch_levels"),
-  epoch_ubs = getOption("SL_epoch_ubs"))
+  epoch_ubs = getOption("SL_epoch_ubs"),
+  unsafe = F
+)
 }
 \arguments{
 \item{tab}{An \code{SL_tibble} as returned
@@ -20,7 +25,7 @@ to include. Can be one or more of "epoch", "day",
 are not inferrable from the available date-time data are ignored.}
 
 \item{interval}{A character string that decides how block
-membership is decided when \code{stude} is of class
+membership is decided when \code{tab} is of class
 \code{interval_SL_tibble}. Can be either "start"
 (use \code{start_timestamp}),
 "end" (use \code{end_timestamp}) or "middle" (use the midpoint between
@@ -36,12 +41,16 @@ available date-time data.}
 
 \item{epoch_ubs}{An integer vector that defines the hour that is
 the upper boundary of each epoch.}
+
+\item{unsafe}{A logical. Default is \code{FALSE}. If this is
+set to \code{TRUE} then less checks will be performed.}
 }
 \description{
 Classify observations from an \code{SL_tibble}
 into block labels using available
 date-time information. See more information
 about "blocks" under the details section.
+Daylight savings is ignored, and started on 31st March 2013.
 }
 \details{
 Block label types can be one or more of "epoch"
